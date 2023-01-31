@@ -17,8 +17,9 @@ body {
 
 .wolf img {
 	position: relative;
-	height: 500px;
+	height: 400px;
 	z-index: -10;
+	transition: 0.6s;
 }
 .circleBtn {
 	width: 40px;
@@ -47,7 +48,51 @@ body {
 }
 
 .chiken {
-	width: 150px;
-	display: block;
-	margin: 105px;
+	width: 120px;
+}
+.chikenPlace {
+	display: flex;
+	flex-direction: column;
+	height: 504px;
+	justify-content: space-between;
+	margin: 0 auto;
+}
+
+.eggPlace img {
+	position: absolute;
+	top: 150px;
+	left: 210px;
+	width: 40px;
+	z-index: -2;
+	animation: changePositionUpLeftEgg 3s linear;
+}
+
+@keyframes changePositionUpLeftEgg {
+	0% {
+		top: 150px;
+		left: 210px;
+		transform: rotateZ(0deg);
+	}
+	20% {
+		top: 180px;
+		left: 300px;
+		transform: rotateZ(90deg);
+	}
+
+	40% {
+		top: 200px;
+		left: 400px;
+		transform: rotateZ(180deg);
+	}
+
+	60% {
+		top: 220px;
+		left: 550px;
+		transform: rotateZ(270deg);
+	}
+	100% {
+		top: 250px;
+		left: 660px;
+		transform: rotateZ(360deg);
+	}
 }

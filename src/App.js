@@ -3,6 +3,8 @@ import './App.css';
 
 import wolf from './img/wolf.png';
 import chiken from './img/chiken.png';
+import eggWhite from './img/white_egg.png';
+import eggOrange from './img/orange_egg.png';
 
 function App() {
 	const [position, setPosition] = useState('start');
@@ -70,14 +72,26 @@ function App() {
 		}
 	};
 
+	const eggPlace = document.querySelector('.eggPlace');
+
+	const startEgg = () => {
+		eggPlace.innerHTML = '<img src={eggWhite} alt="" />';
+	};
+
 	return (
 		<div className="App">
 			<h1>НУ ПОГОДИ МАЗАФАКА</h1>
+			<button onClick={startEgg}>запустить яйцо</button>
 			<div className="container">
 				<div className="chikenPlace">
 					<img className="chiken" src={chiken} alt="" />
 					<img className="chiken" src={chiken} alt="" />
 				</div>
+
+				<div className="eggPlace">
+					<img src={eggWhite} alt="" />
+				</div>
+
 				<div className="">
 					<div onClick={moveUpLeft} className="upLeftBtn circleBtn"></div>
 					<div onClick={moveDownLeft} className="downLeftBtn circleBtn"></div>
@@ -88,6 +102,9 @@ function App() {
 					<div onClick={moveUpRight} className="upRightBtn circleBtn"></div>
 					<div onClick={moveDownRight} className="downRightBtn circleBtn"></div>
 				</div>
+				{/*<div className="eggPlace">
+					<img src={eggOrange} alt="" />
+				</div>*/}
 				<div className="chikenPlace">
 					<img className="chiken" src={chiken} alt="" />
 					<img className="chiken" src={chiken} alt="" />
