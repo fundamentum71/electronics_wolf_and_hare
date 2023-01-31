@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 import wolf from './img/wolf.png';
@@ -7,29 +7,27 @@ import eggWhite from './img/white_egg.png';
 import eggOrange from './img/orange_egg.png';
 
 function App() {
+	const eggPlaseEl = useRef(null);
+	//const eggLeftTop = useRef(null);
+	const cord = useRef(null);
+
+	const [score, setScore] = useState(0);
+
 	const [position, setPosition] = useState('start');
 	const moveUpLeft = () => {
-		console.log('лево верх');
 		setPosition('UpLeft');
-		//setTimeout(() => setPosition('start'), 1000);
 	};
 
 	const moveDownLeft = () => {
-		console.log('лево низ');
 		setPosition('DownLeft');
-		//setTimeout(() => setPosition('start'), 1000);
 	};
 
 	const moveUpRight = () => {
-		console.log('право верх');
 		setPosition('UpRight');
-		//setTimeout(() => setPosition('start'), 1000);
 	};
 
 	const moveDownRight = () => {
-		console.log('право низ');
 		setPosition('DownRight');
-		//setTimeout(() => setPosition('start'), 1000);
 	};
 
 	useEffect(() => {}, [position]);
@@ -51,19 +49,39 @@ function App() {
 	const positionWolf = (position) => {
 		switch (position) {
 			case 'UpLeft': {
-				return <img className="UpLeftWolf" src={wolf} alt="" />;
+				return (
+					<>
+						<img className="UpLeftWolf" src={wolf} alt="" />
+						<div className="wolfRegBox leftTopReg"></div>
+					</>
+				);
 			}
 
 			case 'DownLeft': {
-				return <img className="DownLeftWolf" src={wolf} alt="" />;
+				return (
+					<>
+						<img className="DownLeftWolf" src={wolf} alt="" />
+						<div className="wolfRegBox leftBotReg"></div>
+					</>
+				);
 			}
 
 			case 'UpRight': {
-				return <img className="UpRightWolf" src={wolf} alt="" />;
+				return (
+					<>
+						<img className="UpRightWolf" src={wolf} alt="" />;
+						<div className="wolfRegBox rightTopReg"></div>
+					</>
+				);
 			}
 
 			case 'DownRight': {
-				return <img className="DownRightWolf" src={wolf} alt="" />;
+				return (
+					<>
+						<img className="DownRightWolf" src={wolf} alt="" />
+						<div className="wolfRegBox rightBotReg"></div>
+					</>
+				);
 			}
 
 			case 'start': {
@@ -72,24 +90,40 @@ function App() {
 		}
 	};
 
-	const eggPlace = document.querySelector('.eggPlace');
+	//function changeCoord(timestamp) {
+	//	document.getElementById('coord').innerText = document
+	//		.getElementById('rect')
+	//		.getBoundingClientRect().top;
+	//	requestAnimationFrame(changeCoord);
+	//}
+	//requestAnimationFrame(changeCoord);
 
-	const startEgg = () => {
-		eggPlace.innerHTML = '<img src={eggWhite} alt="" />';
+	//console.log(requestAnimationFrame());
+
+	function changeCoord(timestamp) {
+		cord.current.innerText = document.getElementById('egg').getBoundingClientRect().left;
+		requestAnimationFrame(changeCoord);
+	}
+	requestAnimationFrame(changeCoord);
+
+	const startEgg = (eggWhite) => {
+		eggPlaseEl.current.innerHTML = `<img id='egg' src=${eggWhite} alt="" />`;
 	};
 
 	return (
 		<div className="App">
-			<h1>НУ ПОГОДИ МАЗАФАКА</h1>
-			<button onClick={startEgg}>запустить яйцо</button>
+			<h1>НУ ПОГОДИ, МАЗАФАКА | Счет: {score}</h1>
+			<div ref={cord}></div>
+
+			<button onClick={() => startEgg(eggWhite)}>запустить яйцо</button>
 			<div className="container">
 				<div className="chikenPlace">
 					<img className="chiken" src={chiken} alt="" />
 					<img className="chiken" src={chiken} alt="" />
 				</div>
 
-				<div className="eggPlace">
-					<img src={eggWhite} alt="" />
+				<div ref={eggPlaseEl} className="eggPlace">
+					{/*<img src={eggWhite} alt="" />*/}
 				</div>
 
 				<div className="">

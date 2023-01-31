@@ -1,6 +1,8 @@
 body {
-	border: 2px solid red;
+	/*border: 2px solid red;*/
 	height: 100vh;
+	/*background-image: url(./img/village.jpg);*/
+	background-color: bisque;
 }
 
 .App {
@@ -8,18 +10,21 @@ body {
 }
 
 .container {
-	border: 2px solid rgb(13, 0, 255);
+	/*border: 2px solid rgb(13, 0, 255);*/
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+.wolf {
+	position: relative;
 }
 
 .wolf img {
 	position: relative;
 	height: 400px;
 	z-index: -10;
-	transition: 0.6s;
+	transition: 0.8s;
 }
 .circleBtn {
 	width: 40px;
@@ -61,7 +66,7 @@ body {
 .eggPlace img {
 	position: absolute;
 	top: 150px;
-	left: 210px;
+	left: 310px;
 	width: 40px;
 	z-index: -2;
 	animation: changePositionUpLeftEgg 3s linear;
@@ -70,12 +75,12 @@ body {
 @keyframes changePositionUpLeftEgg {
 	0% {
 		top: 150px;
-		left: 210px;
+		left: 310px;
 		transform: rotateZ(0deg);
 	}
 	20% {
 		top: 180px;
-		left: 300px;
+		left: 350px;
 		transform: rotateZ(90deg);
 	}
 
@@ -91,8 +96,36 @@ body {
 		transform: rotateZ(270deg);
 	}
 	100% {
-		top: 250px;
-		left: 660px;
+		top: 220px;
+		left: 840px;
 		transform: rotateZ(360deg);
 	}
+}
+
+.wolfRegBox {
+	width: 40px;
+	height: 40px;
+	border: 2px solid red;
+	position: absolute;
+	transition: 0.8s;
+}
+
+.leftTopReg {
+	top: 84px;
+	left: 70px;
+}
+
+.leftBotReg {
+	top: 250px;
+	left: 45px;
+}
+
+.rightTopReg {
+	top: 84px;
+	left: 210px;
+}
+
+.rightBotReg {
+	top: 250px;
+	left: 235px;
 }
