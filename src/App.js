@@ -7,44 +7,96 @@ import eggWhite from './img/white_egg.png';
 import eggOrange from './img/orange_egg.png';
 
 function App() {
-	const eggPlaseEl = useRef(null);
-	//const eggLeftTop = useRef(null);
-	const cord = useRef(null);
+	const firstCheken = useRef(null);
+	const firstEgg = useRef(null);
+	const firstRegBox = useRef(null);
 
+	const secondRegBox = useRef(null);
+	const thirdRegBox = useRef(null);
+	const fourthRegBox = useRef(null);
+
+	const [start, setStart] = useState(false);
 	const [score, setScore] = useState(0);
 
+	const [overPositionRegBoxLeft, setOverPositionRegBoxLeft] = useState('start');
+	const [overPositionRegBoxTop, setOverPositionRegBoxTop] = useState('start');
+
 	const [position, setPosition] = useState('start');
+
 	const moveUpLeft = () => {
 		setPosition('UpLeft');
+		changePositionRegBox(firstRegBox);
 	};
 
 	const moveDownLeft = () => {
 		setPosition('DownLeft');
+		changePositionRegBox(secondRegBox);
 	};
 
 	const moveUpRight = () => {
 		setPosition('UpRight');
+		changePositionRegBox(thirdRegBox);
 	};
 
 	const moveDownRight = () => {
 		setPosition('DownRight');
+		changePositionRegBox(fourthRegBox);
 	};
 
-	useEffect(() => {}, [position]);
-	//useEffect(() => {
-	//	const onKeypress = (e) => {
-	//		//if (e.key == 'ArrowRight') {
-	//		//	moveRight();
-	//		//} else if (e.key == 'ArrowLeft') {
-	//		//	moveLeft();
-	//		//}
-	//	};
+	//смена позиции на кнопки
+	useEffect(() => {
+		const onKeypress = (e) => {
+			switch (e.key) {
+				case 'q': {
+					setPosition('UpLeft');
+					changePositionRegBox(firstRegBox);
+					break;
+				}
 
-	//	document.addEventListener('keydown', onKeypress);
-	//	return () => {
-	//		document.removeEventListener('keydown', onKeypress);
-	//	};
-	//}, []);
+				case 'й': {
+					setPosition('UpLeft');
+					changePositionRegBox(firstRegBox);
+					break;
+				}
+				case 'a': {
+					setPosition('DownLeft');
+					changePositionRegBox(secondRegBox);
+					break;
+				}
+				case 'ф': {
+					setPosition('DownLeft');
+					changePositionRegBox(secondRegBox);
+					break;
+				}
+				case 'e': {
+					setPosition('UpRight');
+					changePositionRegBox(thirdRegBox);
+					break;
+				}
+				case 'у': {
+					setPosition('UpRight');
+					changePositionRegBox(thirdRegBox);
+					break;
+				}
+				case 'd': {
+					setPosition('DownRight');
+					changePositionRegBox(fourthRegBox);
+					break;
+				}
+				case 'в': {
+					setPosition('DownRight');
+					changePositionRegBox(fourthRegBox);
+					break;
+				}
+			}
+		};
+
+		document.addEventListener('keydown', onKeypress);
+
+		return () => {
+			document.removeEventListener('keydown', onKeypress);
+		};
+	}, []);
 
 	const positionWolf = (position) => {
 		switch (position) {
@@ -52,7 +104,7 @@ function App() {
 				return (
 					<>
 						<img className="UpLeftWolf" src={wolf} alt="" />
-						<div className="wolfRegBox leftTopReg"></div>
+						<div ref={firstRegBox} className="wolfRegBox firstRegBox"></div>
 					</>
 				);
 			}
@@ -61,7 +113,7 @@ function App() {
 				return (
 					<>
 						<img className="DownLeftWolf" src={wolf} alt="" />
-						<div className="wolfRegBox leftBotReg"></div>
+						<div ref={secondRegBox} className="wolfRegBox leftBotReg"></div>
 					</>
 				);
 			}
@@ -70,7 +122,7 @@ function App() {
 				return (
 					<>
 						<img className="UpRightWolf" src={wolf} alt="" />;
-						<div className="wolfRegBox rightTopReg"></div>
+						<div ref={thirdRegBox} className="wolfRegBox rightTopReg"></div>
 					</>
 				);
 			}
@@ -79,7 +131,7 @@ function App() {
 				return (
 					<>
 						<img className="DownRightWolf" src={wolf} alt="" />
-						<div className="wolfRegBox rightBotReg"></div>
+						<div ref={fourthRegBox} className="wolfRegBox rightBotReg"></div>
 					</>
 				);
 			}
@@ -90,40 +142,97 @@ function App() {
 		}
 	};
 
-	//function changeCoord(timestamp) {
-	//	document.getElementById('coord').innerText = document
-	//		.getElementById('rect')
-	//		.getBoundingClientRect().top;
-	//	requestAnimationFrame(changeCoord);
-	//}
-	//requestAnimationFrame(changeCoord);
+	//координаты 1 курицы
+	let positionfirstChikenLeft = 0;
+	let positionfirstChikenTop = 0;
 
-	//console.log(requestAnimationFrame());
+	useEffect(() => {
+		positionfirstChikenLeft = firstCheken.current.getBoundingClientRect().left;
+		positionfirstChikenTop = firstCheken.current.getBoundingClientRect().top;
+	}, [start]);
 
-	function changeCoord(timestamp) {
-		cord.current.innerText = document.getElementById('egg').getBoundingClientRect().left;
-		requestAnimationFrame(changeCoord);
+	//координаты 1 яйца
+	let positionFirstEggLeft = 0;
+	let positionFirstEggTop = 0;
+
+	//сделать для всех яиц
+	function changeCoordEgg() {
+		positionFirstEggLeft = Math.round(firstEgg.current.getBoundingClientRect().left);
+		positionFirstEggTop = Math.round(firstEgg.current.getBoundingClientRect().top);
+		console.log(`Позиция яйца - Лево:${positionFirstEggLeft}| Верх:${positionFirstEggTop} `);
+
+		requestAnimationFrame(changeCoordEgg, 1000);
+
+		console.log('over', overPositionRegBoxLeft, overPositionRegBoxTop);
+
+		finishFlyEgg(
+			positionFirstEggLeft,
+			//positionFirstEggTop,
+			overPositionRegBoxLeft,
+			//overPositionRegBoxTop,
+		);
 	}
-	requestAnimationFrame(changeCoord);
 
-	const startEgg = (eggWhite) => {
-		eggPlaseEl.current.innerHTML = `<img id='egg' src=${eggWhite} alt="" />`;
+	//координаты регбокса
+
+	function changePositionRegBox(numRegBox) {
+		const positionRegBoxLeft = Math.round(numRegBox.current.getBoundingClientRect().left);
+		const positionRegBoxTop = Math.round(numRegBox.current.getBoundingClientRect().top);
+		console.log(`Позиция regbox - Лево:${positionRegBoxLeft}| Верх:${positionRegBoxTop} `);
+
+		setOverPositionRegBoxLeft(positionRegBoxLeft);
+		setOverPositionRegBoxTop(positionRegBoxTop);
+	}
+
+	const startEgg = () => {
+		setStart(true);
+		requestAnimationFrame(changeCoordEgg, 1000);
+	};
+
+	const restartEgg = () => {
+		if (positionFirstEggLeft === 0 && positionFirstEggTop === 0) {
+			setStart(false);
+		}
+	};
+
+	const finishFlyEgg = (
+		finishPositionEggLeft,
+		//finishPositionEggTop,
+		finishPositionRegBoxLeft,
+		//finishPositionRegBoxTop,
+	) => {
+		if (
+			finishPositionEggLeft == finishPositionRegBoxLeft
+			//finishPositionEggTop == finishPositionRegBoxTop
+		) {
+			setScore(score + 1);
+			setStart(false);
+		} else restartEgg();
 	};
 
 	return (
 		<div className="App">
 			<h1>НУ ПОГОДИ, МАЗАФАКА | Счет: {score}</h1>
-			<div ref={cord}></div>
 
-			<button onClick={() => startEgg(eggWhite)}>запустить яйцо</button>
+			<button onClick={() => startEgg()}>запустить яйцо</button>
+			<button onClick={() => restartEgg()}>перезарядить</button>
 			<div className="container">
 				<div className="chikenPlace">
-					<img className="chiken" src={chiken} alt="" />
+					<img ref={firstCheken} className="chiken" src={chiken} alt="" />
 					<img className="chiken" src={chiken} alt="" />
 				</div>
 
-				<div ref={eggPlaseEl} className="eggPlace">
-					{/*<img src={eggWhite} alt="" />*/}
+				<div className="eggPlace">
+					{start ? (
+						<img
+							ref={firstEgg}
+							id="egg"
+							src={eggWhite}
+							style={{ top: `${positionfirstChikenTop}px`, left: `${positionfirstChikenLeft}px` }}
+						/>
+					) : (
+						''
+					)}
 				</div>
 
 				<div className="">
